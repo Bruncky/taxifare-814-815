@@ -2,9 +2,9 @@ import pandas as pd
 
 from sklearn.model_selection import train_test_split
 
-def get_data():
+def get_data(line_count):
     url = 's3://wagon-public-datasets/taxi-fare-train.csv'
-    data = pd.read_csv(url, nrows = 100)
+    data = pd.read_csv(url, nrows = line_count)
 
     return data
 
