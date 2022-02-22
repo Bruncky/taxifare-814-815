@@ -14,6 +14,9 @@ class Trainer(MLFlowBase):
         )
 
     def train(self):
+        # Defining line_count for get_data
+        line_count = 1000
+
         # Create run
         self.mlflow_create_run()
 
@@ -21,7 +24,7 @@ class Trainer(MLFlowBase):
         self.mlflow_log_param('model', 'random forest regressor')
 
         # Get data
-        data = get_data()
+        data = get_data(line_count = line_count)
 
         # Clean data
         data = clean_data(data)
