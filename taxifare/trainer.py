@@ -33,7 +33,7 @@ class Trainer(MLFlowBase):
         X_train, X_test, y_train, y_test = holdout(data)
 
         # Create Model
-        model = get_model()
+        model = get_model('random_forest')
 
         # Create Pipeline
         pipeline = get_pipeline(model)
