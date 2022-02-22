@@ -5,7 +5,6 @@ from taxifare.model import get_model
 from taxifare.pipeline import get_pipeline
 from taxifare.metrics import compute_rmse
 from taxifare.mlflow import MLFlowBase
-from taxifare.paramtrainer import ParamTrainer
 
 class Trainer(MLFlowBase):
     def __init__(self) -> None:
