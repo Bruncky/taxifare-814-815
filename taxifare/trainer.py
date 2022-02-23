@@ -1,6 +1,6 @@
 import joblib
 
-from taxifare.data import get_data, clean_data, holdout
+from taxifare.data import get_data, clean_data, holdout, save_model_to_gcp
 from taxifare.model import get_model
 from taxifare.pipeline import get_pipeline
 from taxifare.metrics import compute_rmse
@@ -15,7 +15,9 @@ class Trainer(MLFlowBase):
 
     def train(self):
         # Defining line_count for get_data
+        # and model_name for get_model
         line_count = 1000
+        model_name = 'random_forest'
 
         # Create run
         self.mlflow_create_run()
@@ -33,7 +35,7 @@ class Trainer(MLFlowBase):
         X_train, X_test, y_train, y_test = holdout(data)
 
         # Create Model
-        model = get_model('random_forest')
+        model = get_model(model_name)
 
         # Create Pipeline
         pipeline = get_pipeline(model)
@@ -50,10 +52,17 @@ class Trainer(MLFlowBase):
         # Log RMSE
         self.mlflow_log_metric('rmse', rmse)
 
-        # GridSearch
-        # grid_search = ParamTrainer().get_grid_search(pipeline, X_train, y_train)
-
         # Save pipeline
-        joblib.dump(pipeline, 'model.joblib')
+        joblib.dump(pipeline, f'{model_name}.joblib')
+
+        # Save it to GCP
+        save_model_to_gcp('random_forest_regressor', f'{model_name}.joblib')
 
         return pipeline
+
+def main():
+    trainer = Trainer()
+    trainer.train()
+
+if __name__ == '__main__':
+    main()
