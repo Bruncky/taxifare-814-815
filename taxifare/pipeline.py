@@ -2,7 +2,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline, make_pipeline
 from sklearn.compose import ColumnTransformer
 
-from taxifare.transformers.distance_transformer import DistanceTransformer
+from transformers.distance_transformer import DistanceTransformer
 
 def get_pipeline(model):
     pipe_distance = make_pipeline(
